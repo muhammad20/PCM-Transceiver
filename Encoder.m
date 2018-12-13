@@ -1,4 +1,4 @@
-function [y] = Encoder(type, m, mp, l)
+function [y] = Encoder(type, m, mp, l, fs)
 
 % converting voltage levels to decimals
 for i = 1:1:length(m)
@@ -55,5 +55,28 @@ for i = 1:1:length(m)
         counter = counter + 1;
     end
 end
+
+% plotting
+
+xValues = final_values;
+xValues(length(xValues)+1) = xValues(length(xValues));
+
+Ts = 1 / fs;
+for i=1:length(xValues)
+    signalTime(i) = (i-1)*Ts;
+    if type == 3
+        signalTime(i) = signalTime(i)/2;
+    end
+end
+
+figure % opens new figure window
+stairs(signalTime, xValues, 'LineWidth',3);
+
+title('Encoder Output')
+xlabel('time')
+ylabel('voltage')
+ylim([-1*A-1 A+1]);
+
+% end of plotting
 
 y = final_values;
