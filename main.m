@@ -1,7 +1,10 @@
-m = 10;
-L = 8;
-samples = [1.5 3.2 2 3 1.5 3 6 7 -5 -9];
+m = 5;
+L = 256;
+fs = 64;
+fm = 1;
+ts = 0:1/fs: 2 * 1/fm;
+samples = Sampler(fm,fs);
 quantized_samples = Quantizer(1, samples, L, m);
 disp(samples);
 disp(quantized_samples);
-x = Sampler(1,20);
+stairs(ts,quantized_samples);
