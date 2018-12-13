@@ -44,6 +44,7 @@ for i=1:numberOfWords
     end
 end
 
+final_values = zeros(1, numberOfWords);
 % converting binary codewords to decimals
 for i=1:numberOfWords
     final_values(i) = 0;
