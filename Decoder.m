@@ -55,7 +55,7 @@ end
 
 % converting decimals to voltage levels
 for i = 1:numberOfWords
-    final_values(i) = ((final_values(i)*2*mp)/l)-mp;
+    final_values(i) = ((final_values(i)*2*mp)/l)-mp + mp/l;
 end
 
 y = final_values;

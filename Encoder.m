@@ -2,7 +2,7 @@ function [y] = Encoder(type, m, mp, l, fs)
 
 % converting voltage levels to decimals
 for i = 1:1:length(m)
-    output(i)=((m(i)+mp)*l)/(2*mp);
+    output(i)=((m(i)+mp-mp/l)*l)/(2*mp);
 end
 
 numberOfBits = ceil(log2(l)) + 1;
