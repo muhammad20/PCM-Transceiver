@@ -5,8 +5,9 @@ function x = Quantizer(samples, L, Mp, u)
 if nargin == 4
     max_sample = max(samples);
     %use non-uniform u-law quantizer (modify samples then pass them to mid-rise uniform quantizer)
-    modified_samples = max_sample *(log(1 + u * (abs(samples)/max_sample)) / log(1 + u)).* sign(samples);
+    modified_samples = (log(1 + u * (abs(samples)/max_sample)) / log(1 + u)).* sign(samples);
     delta = (max(modified_samples) - min(modified_samples)) / L;
+    disp(delta);
 else
     %use mid-rise unfiorm quantizer
     modified_samples = samples;
@@ -39,4 +40,3 @@ end
 %%return the quantized values
 x = quantized_samples;
 end
-
