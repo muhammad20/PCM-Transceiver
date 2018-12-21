@@ -3,14 +3,17 @@
 
 function x = Quantizer(type, samples, L, Mp, u)
 modified_samples = zeros(1, length(samples));
+delta = 0;
 if type == 2
+    max_samples = max(samples);
     %use non-uniform u-law quantizer (modify samples then pass them to mid-rise uniform quantizer)
-    modified_samples = log(1 + u * abs(samples)) / log(1 + u);
+    modified_samples = (log(1 + u * (abs(samples)/max_samples)) / log(1 + u))* sgn(samples);
+    delta = (max(modified_samples) - min(modified_samples)) / L;
 elseif type == 1 
     %use mid-rise unfiorm quantizer
     modified_samples = samples;
+    delta =  2 * Mp / L;
 end
-delta =  2 * Mp / L;
 quantizer_arr = ones(1, L);
 for k = L / 2 : -1 : 1
         quantizer_arr(L / 2 + 1 - k) = -(delta / 2) - delta * (k - 1);
