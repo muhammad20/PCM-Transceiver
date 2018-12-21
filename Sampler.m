@@ -1,7 +1,7 @@
-function x = Sampler(fm, fs, m_t, offset)
+function x = Sampler(fm, fs, m_t, offset, num_cycles)
 %accept m(t) as an input to the function
-t = -1/fm:1/fs * 1/offset :1/fm;
-ts = -1/fm:1/fs: 1/fm;
+t = -1*num_cycles/fm:1/fs * 1/offset :num_cycles/fm;
+ts = -1*num_cycles/fm:1/fs: num_cycles/fm;
 samples = zeros(1, length(ts));
 k = 1;
 for i = 1 : offset : length(t)
