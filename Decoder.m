@@ -1,4 +1,4 @@
-function [y] = Decoder(type, m, mp, l, fs)
+function [y] = Decoder(type, m, mp, l, u)
 
 % normalizing input voltage (converting input voltages to binary codewords)
 
@@ -58,4 +58,8 @@ for i = 1:numberOfWords
     final_values(i) = ((final_values(i)*2*mp)/l)-mp + mp/l;
 end
 
+if nargin == 5
+    max_q = max(final_values);
+    final_values = (exp(abs(final_values)*log(1+u)/max_q)-1)*max_q/u .*sign(final_values);
+end
 y = final_values;

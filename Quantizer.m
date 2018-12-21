@@ -1,15 +1,13 @@
 % type = 1 => mid-rise uniform quantizer
 % type = 2 => non-uniform u-law quantizer
 
-function x = Quantizer(type, samples, L, Mp, u)
-modified_samples = zeros(1, length(samples));
-delta = 0;
-if type == 2
-    max_samples = max(samples);
+function x = Quantizer(samples, L, Mp, u)
+if nargin == 4
+    max_sample = max(samples);
     %use non-uniform u-law quantizer (modify samples then pass them to mid-rise uniform quantizer)
-    modified_samples = (log(1 + u * (abs(samples)/max_samples)) / log(1 + u))* sgn(samples);
+    modified_samples = max_sample *(log(1 + u * (abs(samples)/max_sample)) / log(1 + u)).* sign(samples);
     delta = (max(modified_samples) - min(modified_samples)) / L;
-elseif type == 1 
+else
     %use mid-rise unfiorm quantizer
     modified_samples = samples;
     delta =  2 * Mp / L;

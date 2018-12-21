@@ -69,14 +69,14 @@ for i=1:length(xValues)
     end
 end
 
-figure % opens new figure window
-stairs(signalTime, xValues, 'LineWidth',3);
-
-title('Encoder Output')
-xlabel('time')
-ylabel('voltage')
-ylim([-1*A-1 A+1]);
-
-% end of plotting
+% figure % opens new figure window
+% stairs(signalTime, xValues, 'LineWidth',3);
+% 
+% title('Encoder Output')
+% xlabel('time')
+% ylabel('voltage')
+% ylim([-1*A-1 A+1]);
+% 
+% % end of plotting
 
 y = final_values;
