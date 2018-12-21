@@ -15,7 +15,7 @@ m_t = mp * cos ( 2 * pi * fm * t);
 samples = Sampler(fm, fs, m_t, offset);
 
 %quantized signal
-quantized_samples = Quantizer(samples, L, mp, u);
+quantized_samples = Quantizer(samples, L, mp);
 
 %encoded signal to be transmitted
 encoded_msg = Encoder(1, quantized_samples, mp, L, fs);
@@ -23,21 +23,19 @@ encoded_msg = Encoder(1, quantized_samples, mp, L, fs);
 %decoded signal at receiver
 received_quantized = Decoder(1, encoded_msg,mp,L);
 
-received_msg = ReconstructionFilter(received_quantized,fm,fs,mp, u);
+received_msg = ReconstructionFilter(received_quantized,fm,fs,mp);
 
-%plotting the data at transmitter
-subplot(2,1,1);
-plot(t, m_t);
-hold on;
-stem(ts, samples);
-subplot(2,1,2);
-plot(t,m_t);
-hold on;
-stairs(ts,quantized_samples);
+% %plotting the data at transmitter
+% subplot(2,1,1);
+% plot(t, m_t);
+% hold on;
+% stem(ts, samples);
+% subplot(2,1,2);
+% stairs(ts,quantized_samples);
 
 figure;
 %plotting data at receiver
 stairs(ts, received_quantized);
 
 figure;
-plot(t,received_msg);
+plot(ts,received_msg);
