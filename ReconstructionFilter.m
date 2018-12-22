@@ -1,10 +1,18 @@
-function x = ReconstructionFilter(received_quantized, fm, fs, u, num_cycles)
-if u ~= 0
-    received_quantized = 5*(exp(abs(received_quantized)*log(1+u))-1)*(1/u) .*sign(received_quantized);
-end
+function x = ReconstructionFilter(received_quantized, fm, fs, u, mp,offset)
+time=(-2/fm): 1/(100*fs): (2/fm);
 
-t = -1*num_cycles/fm : 1/fs : num_cycles/fm;
-y = sinc(fs * t);
-x = conv(y, received_quantized, 'same');
+SSinc=sinc(2*(fm)*(time));
+count1=1;
+count2=1;
+temp=zeros(size(time));
+while(count1<=length(received_quantized))
+   temp(count2)=received_quantized(count1);
+   count1=count1+1;
+   count2=count2+100;
+end
+x=conv(temp,SSinc,'same');
+x=x-(max(x)+min(x))/2;
+x=(mp/max(x))*x;
+
 
 end

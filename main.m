@@ -3,13 +3,14 @@ clear;
 %% Input
 mp = 5;
 L = 32;
-fs = 20;
+fs = 15;
 fm = 10;
 u = 100;
 num_cycles = 2;
 offset = 100;
 ts = -1*num_cycles/fm:1/fs: num_cycles/fm;
 t = -1*num_cycles/fm:1/fs * 1/offset: num_cycles/fm;
+time=(-2/fm): 1/(100*fs): (2/fm);
 
 % original signal
 m_t = mp * cos ( 2 * pi * fm * t);
@@ -22,12 +23,12 @@ samples = Sampler(fm, fs, m_t, offset, num_cycles);
 quantized_samples = Quantizer(samples, L, mp, u);
 
 %encoded signal to be transmitted
-encoded_msg = Encoder(3, quantized_samples, mp, L, fs);
+encoded_msg = Encoder(2, quantized_samples, mp, L, fs);
 
 %decoded signal at receiver
-received_quantized = Decoder(3, encoded_msg,mp,L);
+received_quantized = Decoder(1, encoded_msg,mp,L);
 
-received_msg = ReconstructionFilter(received_quantized,fm,fs,u, num_cycles);
+received_msg = ReconstructionFilter(received_quantized,fm,fs,u, mp,offset);
 
 %% 
 figure;
@@ -60,7 +61,7 @@ figure;
 set(gcf,'name','Destination Output','numbertitle','off');
 plot(t, m_t);
 hold on;
-plot(ts,received_msg);
+plot(time,received_msg);
 title('Destination Output');
 
 %% Frequency Domain Representation
